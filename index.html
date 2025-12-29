@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>口袋电风扇</title>
+    <style>
+        /* 基础样式：确保即使在离线状态下也能完美显示 */
+        body {
+            margin: 0;
+            background-color: #0f172a;
+            color: white;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+            user-select: none;
+        }
+
+        .title {
+            position: absolute;
+            top: 40px;
+            text-align: center;
+        }
+
+        .title h1 {
+            font-weight: 200;
+            letter-spacing: 4px;
+            margin: 0;
+            font-size: 24px;
+        }
+
+        /* 风扇旋转动画核心逻辑 */
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        #fan-container {
+            width: 250px;
+            height: 250px;
+            margin-bottom: 50px;
+            transition: transform 0.5s ease;
+        }
+
+        #blades {
+            transform-origin: 100px 80px;
+        }
+
+        /* 速度控制：1档慢速，2档中速，3档极速 */
+        .speed-1 #blades { animation: spin 1.5s linear infinite; }
+        .speed-2 #blades { animation: spin 0.6s linear infinite; }
+        .speed-3 #blades { animation: spin 0.2s linear infinite; }
+
+        /* 仿物理按钮控制面板 */
+        .controls {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            width: 90%;
+            max-width: 320px;
+        }
+
+        button {
+            border: none;
+            border-bottom: 4px solid #020617;
+            border-radius: 15px;
+            padding: 20px 0;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.1s;
+            background-color: #1e293b;
+            color: #94a3b8;
+            -webkit-tap-highlight-color: transparent;
+            outline: none;
+        }
+
+        button:active {
+            transform: translateY(2px);
+            border-bottom-width: 2px;
+        }
+
+        /* 按钮颜色区分 */
+        .btn-off { background-color: #334155; color: #f8fafc; }
+        .btn-1 { background-color: #1e3a8a; color: #93c5fd; }
+        .btn-2 { background-color: #1e40af; color: white; }
+        .btn-3 { background-color: #2563eb; color: white; }
+
+        /* 选中状态 */
+        button.active {
+            border-bottom: 0;
+            transform: translateY(4px);
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .hint {
+            position: absolute;
+            bottom: 40px;
+            color: #475569;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="title">
+        <h1>口袋电风扇</h1>
+    </div>
+
+    <div id="fan-container">
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <!-- 风扇支架与底座 -->
+            <rect x="70" y="170" width="60" height="10" rx="5" fill="#334155" />
+            <rect x="95" y="130" width="10" height="40" fill="#475569" />
+            
+            <!-- 保护网罩 -->
+            <circle cx="100" cy="80" r="55" fill="#1e293b" stroke="#475569" stroke-width="2" />
+            <circle cx="100" cy="80" r="50" fill="none" stroke="#334155" stroke-width="1" stroke-dasharray="2 4" />
+
+            <!-- 旋转扇叶 -->
+            <g id="blades">
+                <path d="M100 80 Q120 40 100 30 Q80 40 100 80" fill="#60a5fa" />
+                <path d="M100 80 Q140 95 147 80 Q140 65 100 80" fill="#3b82f6" transform="rotate(120, 100, 80)" />
+                <path d="M100 80 Q60 95 53 80 Q60 65 100 80" fill="#2563eb" transform="rotate(240, 100, 80)" />
+                <circle cx="100" cy="80" r="6" fill="#f8fafc" />
+            </g>
+        </svg>
+    </div>
+
+    <div class="controls">
+        <button id="btn-0" class="btn-off active" onclick="setSpeed(0)">关</button>
+        <button id="btn-1" class="btn-1" onclick="setSpeed(1)">1</button>
+        <button id="btn-2" class="btn-2" onclick="setSpeed(2)">2</button>
+        <button id="btn-3" class="btn-3" onclick="setSpeed(3)">3</button>
+    </div>
+
+    <div class="hint">点击按钮切换风速</div>
+
+    <script>
+        function setSpeed(level) {
+            const fan = document.getElementById('fan-container');
+            // 更新风扇速度类
+            fan.className = '';
+            if (level > 0) {
+                fan.classList.add('speed-' + level);
+            }
+
+            // 更新按钮高亮状态
+            document.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('btn-' + level).classList.add('active');
+
+            // 移动端震动反馈
+            if (window.navigator.vibrate) {
+                window.navigator.vibrate(level * 10 + 10);
+            }
+        }
+    </script>
+</body>
+</html>
