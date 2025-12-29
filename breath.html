@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>呼吸冥想</title>
+    <style>
+        :root {
+            --bg: #000000;
+            --ball: #60a5fa;
+        }
+        body {
+            margin: 0;
+            height: 100vh;
+            background-color: var(--bg);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: -apple-system, sans-serif;
+            overflow: hidden;
+            color: white;
+        }
+
+        /* 返回按钮 */
+        .back-btn {
+            position: absolute;
+            top: 40px;
+            left: 20px;
+            color: #475569;
+            text-decoration: none;
+            font-size: 14px;
+            border: 1px solid #1e293b;
+            padding: 8px 16px;
+            border-radius: 20px;
+        }
+
+        /* 核心呼吸球 */
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            width: 300px;
+            height: 300px;
+        }
+
+        .circle {
+            background-color: var(--ball);
+            height: 150px;
+            width: 150px;
+            border-radius: 50%;
+            position: absolute;
+            /* 呼吸动画：4秒吸气，4秒呼气 */
+            animation: breathe 8s ease-in-out infinite;
+            filter: blur(20px);
+            opacity: 0.6;
+        }
+
+        .circle-core {
+            background: radial-gradient(circle, #fff 0%, var(--accent) 100%);
+            height: 100px;
+            width: 100px;
+            border-radius: 50%;
+            position: absolute;
+            animation: breathe 8s ease-in-out infinite;
+            box-shadow: 0 0 50px var(--ball);
+        }
+
+        @keyframes breathe {
+            0%, 100% { transform: scale(0.8); opacity: 0.3; }
+            50% { transform: scale(1.8); opacity: 0.8; }
+        }
+
+        .text-guide {
+            margin-top: 80px;
+            font-weight: 200;
+            letter-spacing: 5px;
+            font-size: 20px;
+            transition: all 0.5s;
+        }
+    </style>
+</head>
+<body>
+
+    <a href="index.html" class="back-btn">← 实验室</a>
+
+    <div class="container">
+        <div class="circle"></div>
+        <div class="circle-core"></div>
+    </div>
+
+    <div class="text-guide" id="guide">吸气...</div>
+
+    <script>
+        const guide = document.getElementById('guide');
+        
+        // 每 4 秒切换一次文字提示
+        setInterval(() => {
+            if (guide.innerText === '吸气...') {
+                guide.innerText = '呼气...';
+                guide.style.color = '#94a3b8';
+            } else {
+                guide.innerText = '吸气...';
+                guide.style.color = '#ffffff';
+            }
+        }, 4000);
+    </script>
+</body>
+</html>
