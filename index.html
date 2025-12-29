@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>我的口袋实验室</title>
+    <style>
+        :root {
+            --bg: #0f172a;
+            --card: #1e293b;
+            --text: #f8fafc;
+            --accent: #3b82f6;
+        }
+
+        body {
+            margin: 0;
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 40px 20px;
+            box-sizing: border-box;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-weight: 200;
+            letter-spacing: 4px;
+            margin: 0;
+            font-size: 28px;
+            color: var(--text);
+        }
+
+        .subtitle {
+            color: #64748b;
+            font-size: 12px;
+            margin-top: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* 菜单网格布局 */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        /* 卡片样式 */
+        .card {
+            background-color: var(--card);
+            border-radius: 24px;
+            padding: 30px 15px;
+            text-decoration: none;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid #334155;
+            -webkit-tap-highlight-color: transparent;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 点击反馈 */
+        .card:active {
+            transform: scale(0.92);
+            background-color: #334155;
+        }
+
+        .icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.3));
+        }
+
+        .name {
+            font-size: 15px;
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+
+        .status {
+            font-size: 11px;
+            color: #10b981;
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+        }
+
+        .status-dot {
+            height: 6px;
+            width: 6px;
+            background-color: #10b981;
+            border-radius: 50%;
+            margin-right: 6px;
+            box-shadow: 0 0 8px #10b981;
+        }
+
+        .locked {
+            opacity: 0.4;
+            cursor: default;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>口袋实验室</h1>
+        <div class="subtitle">Personal Web Collection</div>
+    </header>
+
+    <div class="grid">
+        <!-- 第一个卡片：链接到你改名后的 fan.html -->
+        <a href="fan.html" class="card">
+            <div class="icon">🌀</div>
+            <div class="name">小电风扇</div>
+            <div class="status"><span class="status-dot"></span>已上线</div>
+        </a>
+
+        <!-- 占位卡片 1 -->
+        <div class="card locked">
+            <div class="icon">🎨</div>
+            <div class="name">待创作</div>
+            <div class="status" style="color:#64748b">开发中...</div>
+        </div>
+
+        <!-- 占位卡片 2 -->
+        <div class="card locked">
+            <div class="icon">🎵</div>
+            <div class="name">待创作</div>
+            <div class="status" style="color:#64748b">开发中...</div>
+        </div>
+
+        <!-- 占位卡片 3 -->
+        <div class="card locked">
+            <div class="icon">🧩</div>
+            <div class="name">待创作</div>
+            <div class="status" style="color:#64748b">开发中...</div>
+        </div>
+    </div>
+
+</body>
+</html>
